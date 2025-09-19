@@ -70,6 +70,10 @@ var displayThings = [
 	function() { 
         // Display spoon count in red if it's negative.
         return "You have <span style='" + (player.spoons.lt(0) ? "color: #ff4444; font-weight: bold;" : "") + "'>" + format(player.spoons) + "</span> / " + format(getMaxSpoons()) + " Spoons" 
+    },
+    // DEBUG: Display the current point generation per second to diagnose the spoon consumption bug.
+    function() {
+        return "DEBUG: tmp.pointGen = " + format(tmp.pointGen)
     }
 ]
 
