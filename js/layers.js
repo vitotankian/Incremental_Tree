@@ -27,17 +27,13 @@ addLayer("p", {
     layerShown(){return true},
 
     update(diff) {
-        if (player.points.gt(player.lastSpoonCheck)) {
-            let interactionsGained = player.points.sub(player.lastSpoonCheck);
-            let spoonsToSpend = interactionsGained.div(100).floor();
-    
-            if (spoonsToSpend.gt(0)) {
-                player.spoons = player.spoons.sub(spoonsToSpend);
-                if (player.spoons.lt(0)) {
-                    player.spoons = new Decimal(0);
-                }
-                player.lastSpoonCheck = player.lastSpoonCheck.add(spoonsToSpend.times(100));
-            }
+        // Calculate spoons to spend based on interaction gain rate and time passed
+        let spoonsToSpend = tmp.pointGen.times(diff).div(100);
+        player.spoons = player.spoons.sub(spoonsToSpend);
+
+        // Ensure spoons don't go below zero
+        if (player.spoons.lt(0)) {
+            player.spoons = new Decimal(0);
         }
     }
 })

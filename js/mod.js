@@ -41,19 +41,18 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	let gain = new Decimal(100) // Increased for testing
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
 	spoons: new Decimal(10),
-	lastSpoonCheck: new Decimal(0),
 }}
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() { return "You have " + format(player.spoons, 0) + " Spoons" }
+	function() { return "You have " + format(player.spoons) + " Spoons" }
 ]
 
 // Determines when the game "ends"
