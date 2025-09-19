@@ -38,7 +38,13 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(100) // Increased for testing
+	let gain = new Decimal(10) // Increased for testing
+    
+    // In Burnout, point generation is less effective.
+    if (player.inBurnout) {
+        gain = gain.div(2);
+    }
+
 	return gain
 }
 
