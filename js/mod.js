@@ -1,7 +1,7 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
-	pointsName: "points",
+	name: "The Neurodivergent Tree",
+	author: "Bobo",
+	pointsName: "Social Interactions",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
@@ -33,7 +33,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return true
+	return player.spoons.gt(0)
 }
 
 // Calculate points/sec!
@@ -47,10 +47,13 @@ function getPointGen() {
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
+	spoons: new Decimal(10),
+	lastSpoonCheck: new Decimal(0),
 }}
 
 // Display extra things at the top of the page
 var displayThings = [
+	function() { return "You have " + format(player.spoons, 0) + " Spoons" }
 ]
 
 // Determines when the game "ends"
