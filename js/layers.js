@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // This file defines the layers of the game.
 // Each layer represents a core mechanic or prestige level.
 
@@ -6,17 +5,10 @@ addLayer("r", { // The unique ID for this layer is "r"
     name: "rest",
     symbol: "R",
     position: 0,
-=======
-addLayer("p", {
-    name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
->>>>>>> parent of eeb467e (primera mejora)
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
     }},
-<<<<<<< HEAD
     color: "#66b3ff",
     requires() { 
         if (player.inBurnout) 
@@ -35,17 +27,6 @@ addLayer("p", {
         if (player.s.boostedResetsLeft.gt(0)) {
             mult = mult.times(2);
         }
-=======
-    color: "#4BDC13",
-    requires: new Decimal(10), // Can be a function that takes requirement increases into account
-    resource: "prestige points", // Name of prestige currency
-    baseResource: "points", // Name of resource prestige is based on
-    baseAmount() {return player.points}, // Get the current amount of baseResource
-    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
-    gainMult() { // Calculate the multiplier for main currency from bonuses
-        mult = new Decimal(1)
->>>>>>> parent of eeb467e (primera mejora)
         return mult
     },
     gainExp() { 
@@ -60,13 +41,12 @@ addLayer("p", {
 
     row: 0,
     hotkeys: [
-        {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "r", description: "R: Reset for rest points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true},
 
     // This function is called every game tick.
     update(diff) {
-<<<<<<< HEAD
         // This check is crucial for the engine to correctly process the update loop.
         if (canGenPoints()) {
             // Spoon consumption logic.
@@ -101,17 +81,6 @@ addLayer("p", {
             effectDisplay() { return "+" + format(upgradeEffect('r', 11)) + " Spoons/sec" },
         },
     },
-=======
-        // Calculate spoons to spend based on interaction gain rate and time passed
-        let spoonsToSpend = tmp.pointGen.times(diff).div(100);
-        player.spoons = player.spoons.sub(spoonsToSpend);
-
-        // Ensure spoons don't go below zero
-        if (player.spoons.lt(0)) {
-            player.spoons = new Decimal(0);
-        }
-    }
->>>>>>> parent of eeb467e (primera mejora)
 })
 
 // Add the second layer: Sleep
