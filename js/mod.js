@@ -29,8 +29,6 @@ function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
 }
 
-// Determines if it should show points/sec.
-// This is the isolated test to find the root cause of the bug.
 function canGenPoints(){
 	return true
 }
@@ -46,7 +44,6 @@ function getPointGen() {
 
 function getMaxSpoons() {
     let max = new Decimal(10)
-    // We will add upgrades that increase this later
     return max
 }
 
@@ -54,13 +51,15 @@ function getMaxSpoons() {
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
     spoons: new Decimal(10),
-    lastSpoonCheck: new Decimal(0), // Re-adding for robust spoon consumption logic
+    lastSpoonCheck: new Decimal(0),
+    inBurnout: false, // Tracks if the player is in the Burnout state.
 }}
 
 // Display extra things at the top of the page
 var displayThings = [
 	function() { 
-        return "You have " + format(player.spoons) + " / " + format(getMaxSpoons()) + " Spoons" 
+        // Display spoon count in red if in Burnout.
+        return "You have <span style='" + (player.inBurnout ? "color: #ff4444; font-weight: bold;" : "") + "'>" + format(player.spoons) + "</span> / " + format(getMaxSpoons()) + " Spoons" 
     }
 ]
 

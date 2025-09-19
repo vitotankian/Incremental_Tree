@@ -36,6 +36,11 @@ addLayer("r", {
             player.lastSpoonCheck = player.points; // Update the checkpoint to the current points.
         }
 
+        // Trigger Burnout state if spoons are depleted.
+        if (player.spoons.lte(0) && !player.inBurnout) {
+            player.inBurnout = true;
+        }
+
         // Spoon regeneration from upgrade
         if (hasUpgrade('r', 11)) {
             player.spoons = player.spoons.add(upgradeEffect('r', 11).times(diff));
