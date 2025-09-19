@@ -38,6 +38,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
+<<<<<<< HEAD
 	let gain = new Decimal(10) // Base gain, returned to normal after debugging.
     
     // In Burnout, point generation is less effective.
@@ -45,15 +46,11 @@ function getPointGen() {
         gain = gain.div(2);
     }
 
+=======
+	let gain = new Decimal(100) // Increased for testing
+>>>>>>> parent of eeb467e (primera mejora)
 	return gain
 }
-
-function getMaxSpoons() {
-    let max = new Decimal(10)
-    // We will add upgrades that increase this later
-    return max
-}
-
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
@@ -63,10 +60,14 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
+<<<<<<< HEAD
 	function() { 
         // Display spoon count in red if it's negative.
         return "You have <span style='" + (player.spoons.lt(0) ? "color: #ff4444; font-weight: bold;" : "") + "'>" + format(player.spoons) + "</span> / " + format(getMaxSpoons()) + " Spoons" 
     }
+=======
+	function() { return "You have " + format(player.spoons) + " Spoons" }
+>>>>>>> parent of eeb467e (primera mejora)
 ]
 
 function isEndgame() {
