@@ -41,9 +41,16 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(100) // Increased for testing
+	let gain = new Decimal(1) // Back to normal speed
 	return gain
 }
+
+function getMaxSpoons() {
+    let max = new Decimal(10)
+    // We will add upgrades that increase this later
+    return max
+}
+
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
@@ -52,7 +59,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() { return "You have " + format(player.spoons) + " Spoons" }
+	function() { return "You have " + format(player.spoons) + " / " + format(getMaxSpoons()) + " Spoons" }
 ]
 
 // Determines when the game "ends"
