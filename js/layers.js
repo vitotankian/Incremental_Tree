@@ -27,14 +27,13 @@ addLayer("r", {
     layerShown(){return true},
 
     update(diff) {
-        // Spoon consumption
-        if (canGenPoints()) {
-            let spoonsToSpend = tmp.pointGen.times(diff).div(100);
+        // Robust spoon consumption logic using a direct point check.
+        if (player.points.gt(player.lastSpoonCheck)) {
+            let interactionsGained = player.points.sub(player.lastSpoonCheck);
+            let spoonsToSpend = interactionsGained.div(100);
+            
             player.spoons = player.spoons.sub(spoonsToSpend);
-    
-            if (player.spoons.lt(0)) {
-                player.spoons = new Decimal(0);
-            }
+            player.lastSpoonCheck = player.points; // Update the checkpoint to the current points.
         }
 
         // Spoon regeneration from upgrade
