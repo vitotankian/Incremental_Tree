@@ -23,16 +23,12 @@ let changelog = `<h1>Changelog:</h1><br>
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
-// If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
-// (The ones here are examples, all official functions are already taken care of)
 var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
 }
 
-// Determines if it should show points/sec.
-// Now, we always generate points, even with negative spoons, to enable the Burnout state.
 function canGenPoints(){
 	return true
 }
@@ -42,7 +38,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(10) // Base gain
+	let gain = new Decimal(10) // Base gain, returned to normal after debugging.
     
     // In Burnout, point generation is less effective.
     if (player.inBurnout) {
@@ -70,18 +66,12 @@ var displayThings = [
 	function() { 
         // Display spoon count in red if it's negative.
         return "You have <span style='" + (player.spoons.lt(0) ? "color: #ff4444; font-weight: bold;" : "") + "'>" + format(player.spoons) + "</span> / " + format(getMaxSpoons()) + " Spoons" 
-    },
-    // DEBUG: Display the current point generation per second to diagnose the spoon consumption bug.
-    function() {
-        return "DEBUG: tmp.pointGen = " + format(tmp.pointGen)
     }
 ]
 
-// Determines when the game "ends"
 function isEndgame() {
 	return player.points.gte(new Decimal("e280000000"))
 }
-
 
 
 // Less important things beyond this point!
@@ -96,7 +86,5 @@ function maxTickLength() {
 	return(3600) // Default is 1 hour which is just arbitrarily large
 }
 
-// Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
-// you can cap their current resources with this.
 function fixOldSave(oldVersion){
 }
