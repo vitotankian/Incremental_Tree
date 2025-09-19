@@ -31,9 +31,10 @@ function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
 }
 
-// Determines if it should show points/sec
+// Determines if it should show points/sec.
+// Now, we always generate points, even with negative spoons, to enable the Burnout state.
 function canGenPoints(){
-	return player.spoons.gt(0)
+	return true
 }
 
 // Calculate points/sec!
@@ -41,7 +42,13 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1) // Back to normal speed
+	let gain = new Decimal(100) // Base gain
+    
+    // In Burnout, point generation is less effective.
+    if (player.inBurnout) {
+        gain = gain.div(2);
+    }
+
 	return gain
 }
 
@@ -54,12 +61,16 @@ function getMaxSpoons() {
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
-	spoons: new Decimal(10),
+    spoons: new Decimal(10),
+    inBurnout: false, // Tracks if the player is in the Burnout state.
 }}
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() { return "You have " + format(player.spoons) + " / " + format(getMaxSpoons()) + " Spoons" }
+	function() { 
+        // Display spoon count in red if it's negative.
+        return "You have <span style='" + (player.spoons.lt(0) ? "color: #ff4444; font-weight: bold;" : "") + "'>" + format(player.spoons) + "</span> / " + format(getMaxSpoons()) + " Spoons" 
+    }
 ]
 
 // Determines when the game "ends"
