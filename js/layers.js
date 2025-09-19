@@ -50,11 +50,11 @@ addLayer("r", { // The unique ID for this layer is "r"
     layerShown(){return true},
 
     update(diff) {
-        if (canGenPoints()) {
-            let spoonsToSpend = tmp.pointGen.times(diff).div(100);
-            player.spoons = player.spoons.sub(spoonsToSpend);
-        }
+        // DIAGNOSTIC TEST: Hardcode spoon consumption to isolate the bug.
+        // This will subtract 1 spoon per second, ignoring point generation.
+        player.spoons = player.spoons.sub(new Decimal(1).times(diff));
 
+        // The rest of the logic remains to check for interactions
         if (player.spoons.lte(0) && !player.inBurnout) {
             player.inBurnout = true;
         }
