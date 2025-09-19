@@ -33,24 +33,19 @@ addLayer("r", {
     layerShown(){return true},
 
     update(diff) {
-        // Robust spoon consumption logic
-        if (player.points.gt(player.lastSpoonCheck)) {
-            let interactionsGained = player.points.sub(player.lastSpoonCheck);
-            let spoonsToSpend = interactionsGained.div(100);
-            
-            player.spoons = player.spoons.sub(spoonsToSpend);
-            player.lastSpoonCheck = player.points;
-        }
+        // Standard, time-based consumption method.
+        let spoonsToSpend = tmp.pointGen.times(diff).div(100);
+        player.spoons = player.spoons.sub(spoonsToSpend);
 
-        // Trigger Burnout state
+        // Trigger Burnout state.
         if (player.spoons.lte(0) && !player.inBurnout) {
             player.inBurnout = true;
         }
 
-        // Percentage-based spoon regeneration from the 'Mindful Breathing' upgrade.
-        if (hasUpgrade('r', 11) && player.spoons.gt(0)) {
-            // Regenerate 1% of current spoons per second.
-            let regen = player.spoons.times(0.01).times(diff);
+        // Spoon regeneration from the 'Mindful Breathing' upgrade.
+        if (hasUpgrade('r', 11)) {
+            // Regenerate 0.5% of MAX spoons per second. This is constant and works during Burnout.
+            let regen = getMaxSpoons().times(0.005).times(diff);
             player.spoons = player.spoons.add(regen);
         }
 
@@ -60,18 +55,13 @@ addLayer("r", {
         }
     },
 
-    // This function is called after a prestige reset.
-    postReset() {
-        // Reset the spoon consumption checkpoint. This is crucial to re-enable spoon consumption after a reset.
-        player.lastSpoonCheck = new Decimal(0);
-    },
+    // postReset is no longer needed as we are not using lastSpoonCheck anymore.
 
     upgrades: {
         11: {
             title: "Mindful Breathing",
-            description: "Regenerate 1% of your current Spoons every second.",
+            description: "Regenerate 0.5% of your maximum Spoons every second. This helps recover from Burnout.",
             cost: new Decimal(2),
-            // effect() and effectDisplay() are no longer needed.
         },
     },
 })

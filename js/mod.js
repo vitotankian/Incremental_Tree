@@ -57,7 +57,6 @@ function getMaxSpoons() {
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
     spoons: new Decimal(10),
-    lastSpoonCheck: new Decimal(0),
     inBurnout: false, // Tracks if the player is in the Burnout state.
 }}
 
