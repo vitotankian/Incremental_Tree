@@ -59,6 +59,10 @@ function getPointGen() {
 
 function getMaxSpoons() {
     let max = new Decimal(10)
+    // Check for the 'Mayor Resiliencia' upgrade safely
+    if (player.r.grid && getGridData('r', 102)) {
+        max = max.add(1);
+    }
     return max
 }
 

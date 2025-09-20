@@ -1,5 +1,18 @@
 # Development Changelog for The Neurodivergent Tree
 
+## Version 0.2 (Deep Burnout Mechanics) - Circa October 2023
+
+- **[Hito]** Completed the **Deep Burnout** system, transforming it into a core game mechanic.
+- **[Layer]** Added a new informational side-layer, "Burnout" (B), which only appears when the player is in the Burnout state.
+- **[Mechanic]** Implemented a dynamic, multi-level Burnout system with escalating penalties:
+    -   **Level 1: Agotamiento (≤ 0 Spoons):** SIP gain reduced by 50%, 'Rest' cost is doubled.
+    -   **Level 2: Fatiga Crónica (≤ -10 Spoons):** SIP gain reduction increases to 75%, 'Mindful Breathing' regeneration is halved.
+    -   **Level 3: Colapso (≤ -50 Spoons):** 'Mindful Breathing' regeneration stops completely, and the cost of the 'Sleep' ability increases.
+- **[UI]** The "Burnout" tab now clearly displays all levels and their penalties, dynamically highlighting the player's current level.
+- **[UI]** Added a glowing effect to the "Burnout" layer button to increase its visibility when active.
+
+---
+
 ## Version 0.1 (Initial Prototype & Core Mechanics) - Circa October 2023
 
 This log documents the initial, often challenging, development phase of the game, capturing the core ideas and the process of stabilizing the engine.
@@ -24,11 +37,9 @@ This period was marked by a significant and persistent bug where the core Spoon 
 
 ### Burnout & Strategic Recovery Mechanics
 
-- **[Mechanic]** Successfully implemented the "Burnout" state.
+- **[Mechanic]** Successfully implemented the initial "Burnout" state.
     - Triggers automatically when Spoons reach ≤ 0.
     - Provides clear visual feedback (Spoon counter turns red).
-    - Reduces SIP gain by 50%.
-    - Doubles the cost of performing a "Rest".
 - **[Design]** Made the "Burnout" state persistent. Performing a "Rest" no longer automatically ends the state, creating a more significant challenge.
 - **[Layer]** Designed and implemented the "Sleep" (S) layer as a strategic recovery tool.
     - It is an active ability, not a prestige reset.
