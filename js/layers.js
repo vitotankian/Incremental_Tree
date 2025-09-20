@@ -57,8 +57,8 @@ addLayer("r", {
 
         // Spoon regeneration from the 'Mindful Breathing' upgrade.
         if (hasUpgrade('r', 11)) {
-            // Base regeneration
-            let regen = getMaxSpoons().times(0.005);
+            // Base regeneration (0.1% of max spoons)
+            let regen = getMaxSpoons().times(0.001);
             
             // Apply Sleep Bonus
             if (player.sleepBonus.gt(0)) {
@@ -77,7 +77,15 @@ addLayer("r", {
     upgrades: {
         11: {
             title: "Mindful Breathing",
-            description: "Regenerate 0.5% of your maximum Spoons every second. This helps recover from Burnout.",
+            // The description is now a function to be dynamic and show a percentage.
+            description() {
+                let baseRate = 0.1; // Base rate as a percentage
+                let currentRate = baseRate;
+                if (player.sleepBonus.gt(0)) {
+                    currentRate *= 1.5;
+                }
+                return "Regenerate " + format(currentRate, 2) + "% of your maximum Spoons per second.";
+            },
             cost: new Decimal(2),
         },
     },
@@ -161,4 +169,42 @@ addLayer("s", {
             style: { "min-height": "120px", width: "200px" },
         },
     },
+})
+
+// The informational layer for the Burnout state
+addLayer("b", {
+    name: "burnout",
+    symbol: "B",
+    color: "#ff6666",
+    row: "side", // This makes it a side layer
+    layerShown() { 
+        return player.inBurnout 
+    },
+    type: "none",
+
+    // Add a glowing effect to the tab button
+    nodeStyle() {
+        if(player.inBurnout) return {
+            "box-shadow": "0 0 20px #ff6666",
+            "border-color": "#ff8888"
+        }
+    },
+
+    tabFormat: [
+        ["display-text", "You are in Burnout. Your energy is draining and your capacity to recover is impaired."],
+        "blank",
+        "h-line",
+        "blank",
+        ["display-text", "<h3>Burnout Levels:</h3>"],
+        "blank",
+        ["raw-html", function() {
+            let html = "<div style='border: 2px solid #ff8888; padding: 10px; border-radius: 5px;'><h4>Level 1: Agotamiento</h4>";
+            html += "<span>(Active at 0 Spoons or less)</span><br>";
+            html += "<ul>";
+            html += "<li>Social Interaction gain is reduced by 50%.</li>";
+            html += "<li>The cost of 'Rest' is doubled.</li>";
+            html += "</ul></div>";
+            return html;
+        }],
+    ],
 })
