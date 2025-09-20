@@ -38,11 +38,15 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1) // Base gain
+	let gain = new Decimal(10) // Base gain for testing
     
     // In Burnout, point generation is less effective.
     if (player.inBurnout) {
-        gain = gain.div(2);
+        if (player.spoons.lte(-10)) { // Level 2 Burnout
+            gain = gain.times(0.25); // 75% reduction
+        } else { // Level 1 Burnout
+            gain = gain.times(0.5); // 50% reduction
+        }
     }
 
     // Apply debug time speed multiplier

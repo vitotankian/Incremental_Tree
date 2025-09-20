@@ -65,6 +65,13 @@ addLayer("r", {
                 regen = regen.times(1.5);
             }
 
+            // Apply Burnout penalties
+            if (player.spoons.lte(-50)) { // Level 3
+                regen = regen.times(0);
+            } else if (player.spoons.lte(-10)) { // Level 2
+                regen = regen.times(0.5);
+            }
+
             player.spoons = player.spoons.add(regen.times(diff));
         }
 
@@ -83,6 +90,12 @@ addLayer("r", {
                 let currentRate = baseRate;
                 if (player.sleepBonus.gt(0)) {
                     currentRate *= 1.5;
+                }
+                // Apply Burnout penalties to the display value
+                if (player.spoons.lte(-50)) { // Level 3
+                    currentRate = 0;
+                } else if (player.spoons.lte(-10)) { // Level 2
+                    currentRate *= 0.5;
                 }
                 return "Regenerate " + format(currentRate, 2) + "% of your maximum Spoons per second.";
             },
@@ -147,13 +160,20 @@ addLayer("s", {
         11: {
             title: "Get some Sleep",
             display() {
-                return "Costs: 10 Rest Points<br><br>Instantly recover 5 Spoons and boost Rest upgrades by 1.5x for 10 seconds."
+                let cost = new Decimal(10);
+                if (player.spoons.lte(-50)) cost = new Decimal(15); // Level 3 cost increase
+                return "Costs: " + format(cost, 0) + " Rest Points<br><br>Instantly recover 5 Spoons and boost Rest upgrades by 1.5x for 10 seconds."
             },
             canClick() {
-                return player.r.points.gte(10);
+                let cost = new Decimal(10);
+                if (player.spoons.lte(-50)) cost = new Decimal(15);
+                return player.r.points.gte(cost);
             },
             onClick() {
-                player.r.points = player.r.points.sub(10);
+                let cost = new Decimal(10);
+                if (player.spoons.lte(-50)) cost = new Decimal(15);
+
+                player.r.points = player.r.points.sub(cost);
                 player.spoons = player.spoons.add(5);
                 player.sleepBonus = new Decimal(10); // Activate the 10-second bonus
 
@@ -198,12 +218,39 @@ addLayer("b", {
         ["display-text", "<h3>Burnout Levels:</h3>"],
         "blank",
         ["raw-html", function() {
-            let html = "<div style='border: 2px solid #ff8888; padding: 10px; border-radius: 5px;'><h4>Level 1: Agotamiento</h4>";
+            let level1Active = player.spoons.lte(0) && player.spoons.gt(-10);
+            let level2Active = player.spoons.lte(-10) && player.spoons.gt(-50);
+            let level3Active = player.spoons.lte(-50);
+
+            let activeStyle = "border: 2px solid #ff8888; background-color: #4d2020; padding: 10px; border-radius: 5px; margin-bottom: 10px;";
+            let inactiveStyle = "border: 1px solid #888; padding: 10px; border-radius: 5px; margin-bottom: 10px; opacity: 0.6;";
+
+            let html = "";
+
+            // Level 1 Display
+            html += `<div style='${level1Active ? activeStyle : inactiveStyle}'><h4>Level 1: Agotamiento</h4>`;
             html += "<span>(Active at 0 Spoons or less)</span><br>";
             html += "<ul>";
             html += "<li>Social Interaction gain is reduced by 50%.</li>";
             html += "<li>The cost of 'Rest' is doubled.</li>";
             html += "</ul></div>";
+
+            // Level 2 Display
+            html += `<div style='${level2Active ? activeStyle : inactiveStyle}'><h4>Level 2: Fatiga Crónica</h4>`;
+            html += "<span>(Active at -10 Spoons or less)</span><br>";
+            html += "<ul>";
+            html += "<li>Social Interaction gain is reduced by 75%.</li>";
+            html += "<li>\'Mindful Breathing\' regeneration is reduced by 50%.</li>";
+            html += "</ul></div>";
+
+            // Level 3 Display
+            html += `<div style='${level3Active ? activeStyle : inactiveStyle}'><h4>Level 3: Colapso</h4>`;
+            html += "<span>(Active at -50 Spoons or less)</span><br>";
+            html += "<ul>";
+            html += "<li>\'Mindful Breathing\' regeneration stops completely.</li>";
+            html += "<li>The cost of 'Sleep' ability increases.</li>";
+            html += "</ul></div>";
+
             return html;
         }],
     ],
