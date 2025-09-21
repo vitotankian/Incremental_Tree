@@ -27,15 +27,15 @@ This document outlines the planned features and development milestones for the g
 
 ---
 
-### Hito 2: Rediseñar la Progresión de la Capa 'Rest'
+### Hito 2: Rediseñar la Progresión de la Capa 'Rest' (En Progreso)
 
 **Objetivo:** Transformar la capa "Rest" en el núcleo estratégico del juego, con un sistema de mejoras dinámico que reaccione a las decisiones y al progreso del jugador.
 
--   [ ] **[Sistema] Implementar Parrilla de Mejoras Dinámica:**
-    -   [ ] **Elección Inicial:** La capa comenzará con dos mejoras de Nivel 1 disponibles, con un coste inicial bajo (ej: 1 RP y 2 RP).
-    -   [ ] **Mejoras Iniciales (Nivel 1):**
-        -   [ ] **Columna Regeneración - "Recuperación Constante":** Cada 150 Interacciones Sociales ganadas, regenera 1 Spoon. *Feedback: Muestra un texto "+1 Spoon" al activarse.*
-        -   [ ] **Columna Capacidad - "Mayor Resiliencia":** Añade +1 a la capacidad máxima de Spoons y otorga 1 Spoon instantáneamente al comprarla.
+-   [x] **[Sistema] Implementar Parrilla de Mejoras Dinámica:**
+    -   [x] **Elección Inicial:** La capa comenzará con dos mejoras de Nivel 1 disponibles, con un coste inicial bajo (ej: 1 RP y 2 RP).
+    -   [x] **Mejoras Iniciales (Nivel 1):**
+        -   [x] **Columna Regeneración - "Recuperación Constante":** Cada 150 Interacciones Sociales ganadas, regenera 1 Spoon. *Feedback: Muestra un texto "+1 Spoon" al activarse.*
+        -   [x] **Columna Capacidad - "Mayor Resiliencia":** Añade +1 a la capacidad máxima de Spoons y otorga 1 Spoon instantáneamente al comprarla.
     -   [ ] **Coste Dinámico:** Al comprar una de las mejoras de Nivel 1, el coste en RP de la mejora restante en esa misma fila se duplicará.
     -   [ ] **Desbloqueo por Niveles (Filas):** Una vez que el jugador compre las dos mejoras de una fila, se desbloqueará la siguiente fila de mejoras debajo de las anteriores.
 
@@ -90,6 +90,7 @@ This document outlines the planned features and development milestones for the g
 -   [ ] **[Tarea]** Revisar los costes de las mejoras.
 -   [ ] **[Tarea]** Ajustar las tasas de regeneración y consumo.
 -   [ ] **[Tarea]** Añadir más feedback visual y textual para que las mecánicas sean claras.
+-   [ ] **[UI]** Crear un tipo de popup personalizado para notificaciones de recursos (ej: "+1 Spoon").
 
 ---
 

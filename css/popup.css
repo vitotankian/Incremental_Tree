@@ -27,6 +27,15 @@
 	background: #D1C23C;
 }
 
+/* Custom popup class for resource notifications */
+.resource-popup {
+	background-color: yellow;
+	color: black;
+	border: 2px solid black;
+	font-weight: bold;
+	box-shadow: 0 0 10px yellow;
+}
+
 .fade-enter-active, .fade-leave-active {
 	transition: opacity .3s
 }

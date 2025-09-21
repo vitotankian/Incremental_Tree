@@ -1,5 +1,18 @@
 # Development Changelog for The Neurodivergent Tree
 
+## Version 0.3 (System Refactoring & UI Polish) - Circa October 2023
+
+- **[Refactor]** The "Rest" layer's upgrade system was completely refactored from the legacy `upgrades` object to the modern `grid` system. This provides a robust foundation for the dynamic upgrade parrilla planned in the roadmap.
+- **[Feature]** Implemented the first two Nivel 1 upgrades in the new `grid`:
+    - **Recuperación Constante:** Regenerates 1 Spoon for every 150 SIP gained.
+    - **Mayor Resiliencia:** Increases max Spoons by 1 and grants 1 Spoon instantly on purchase.
+- **[Refactor]** The "Burnout" layer's UI was refactored to use the engine's native `milestones` system instead of a manual `raw-html` implementation, resulting in cleaner code and better performance.
+- **[UI/UX]** Implemented a permanent visibility feature for the "Burnout" layer. Once unlocked, the layer remains visible, and its icon color dynamically changes to indicate if the Burnout state is active (red) or inactive (grey).
+- **[UI/UX]** Corrected the styling of the Burnout milestones to properly display the currently active level without visual glitches or color conflicts.
+- **[Bugfix]** After a deep and challenging debugging process, the `doPopup` function was correctly implemented to provide clear, visible feedback for the "Recuperación Constante" upgrade.
+
+---
+
 ## Version 0.2 (Deep Burnout Mechanics) - Circa October 2023
 
 - **[Hito]** Completed the **Deep Burnout** system, transforming it into a core game mechanic.
